@@ -23,8 +23,9 @@ echo "deb [arch=amd64] https://deb.debian.org/debian/ $(lsb_release -cs) main co
 
 # Add Steam repository
 echo "Adding Steam repository..."
-wget -O - https://repo.steampowered.com/steam/archive/stable/steam.list | tee /etc/apt/sources.list.d/steam.list
-wget -O - https://repo.steampowered.com/steam/archive/stable/steam.gpg | apt-key add -
+wget -O /usr/share/keyrings/steam.gpg https://repo.steampowered.com/steam/archive/stable/steam.gpg
+echo "deb [signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/archive/stable/ steam main" | tee /etc/apt/sources.list.d/steam.list
+
 
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
@@ -63,5 +64,5 @@ echo "Removing unnecessary packages..."
 apt autoremove -y
 
 # Reboot the system to start the graphical environment
-echo "Rebooting the system..."
-reboot
+#echo "Rebooting the system..."
+#reboot
