@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if lsb_release is installed
+if ! command -v lsb_release &> /dev/null; then
+    echo "lsb_release not found, installing it..."
+    apt install -y lsb-release
+fi
+
 # Backup existing sources list
 echo "Backing up existing sources list..."
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
@@ -17,15 +23,10 @@ deb http://deb.debian.org/debian/ $(lsb_release -cs)-updates main contrib non-fr
 deb-src http://deb.debian.org/debian/ $(lsb_release -cs)-updates main contrib non-free
 EOF
 
-# Optionally add the Mozilla repository for latest Firefox
-echo "Adding Mozilla repository for the latest Firefox..."
-echo "deb [arch=amd64] https://deb.debian.org/debian/ $(lsb_release -cs) main contrib non-free" >> /etc/apt/sources.list.d/mozilla.list
-
 # Add Steam repository
 echo "Adding Steam repository..."
 wget -O /usr/share/keyrings/steam.gpg https://repo.steampowered.com/steam/archive/stable/steam.gpg
 echo "deb [signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/archive/stable/ steam main" | tee /etc/apt/sources.list.d/steam.list
-
 
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
@@ -37,23 +38,21 @@ echo "Installing minimal XFCE desktop environment..."
 apt install -y xfce4
 
 # Install essential applications
-echo "Installing essential applications..."     
+echo "Installing essential applications..."
 apt install -y \
-    gimp \             # Image editor
-    vlc \              # Media player
-    gnome-screenshot \ # Screenshot tool
-    network-manager \  # Network management tool
-    synaptic \         # Package manager
+    gimp \
+    vlc \
+    gnome-screenshot \
+    network-manager \
+    synaptic
 
-# Install firefox
-echo "Installing Firefox..." 
-apt install -y firefox
+# Install Firefox
+echo "Installing Firefox..."
+apt install -y firefox-esr  # Firefox ESR may be the default for Debian
 
-
-# Install firefox
-echo "Installing steam..." 
+# Install Steam
+echo "Installing Steam..."
 apt install -y steam
-
 
 # Clean up the package cache
 echo "Cleaning up the package cache..."
