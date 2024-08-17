@@ -38,13 +38,21 @@ apt install -y xfce4
 # Install essential applications
 echo "Installing essential applications..."     
 apt install -y \
-    firefox \          # Standard web browser (latest version from Mozilla repo)
     gimp \             # Image editor
     vlc \              # Media player
     gnome-screenshot \ # Screenshot tool
     network-manager \  # Network management tool
     synaptic \         # Package manager
-    steam \            # Steam for gaming
+
+# Install firefox
+echo "Installing Firefox..." 
+apt install -y firefox
+
+
+# Install firefox
+echo "Installing steam..." 
+apt install -y steam
+
 
 # Clean up the package cache
 echo "Cleaning up the package cache..."
