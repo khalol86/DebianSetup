@@ -28,6 +28,12 @@ echo "Adding Steam repository..."
 wget -O /usr/share/keyrings/steam.gpg https://repo.steampowered.com/steam/archive/stable/steam.gpg
 echo "deb [signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/archive/stable/ steam main" | tee /etc/apt/sources.list.d/steam.list
 
+# Add Firefox repository for the latest version (non-ESR)
+echo "Adding Firefox repository..."
+apt install -y curl
+curl -sSL https://packages.mozilla.org/keys/mozilla.asc | gpg --dearmor | tee /usr/share/keyrings/mozilla-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/mozilla-archive-keyring.gpg] http://packages.mozilla.org/debian/ stable main" | tee /etc/apt/sources.list.d/mozilla.list
+
 # Update package list and upgrade installed packages
 echo "Updating package list and upgrading installed packages..."
 apt update
@@ -46,9 +52,9 @@ apt install -y \
     network-manager \
     synaptic
 
-# Install Firefox
+# Install Firefox (latest version)
 echo "Installing Firefox..."
-apt install -y firefox-esr  # Firefox ESR may be the default for Debian
+apt install -y firefox
 
 # Install Steam
 echo "Installing Steam..."
